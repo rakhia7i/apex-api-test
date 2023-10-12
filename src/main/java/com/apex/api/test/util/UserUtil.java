@@ -13,10 +13,13 @@ public class UserUtil {
 
     private static void init() throws Exception {
         user = new User();
-        user.setName(faker.name().fullName());
+        String firstName = faker.name().firstName();
+        String lastName = faker.name().lastName();
+
+        user.setName(firstName + " " + lastName);
         user.setGender(getRandomArrItem(genderArr));
         user.setStatus(getRandomArrItem(statusArr));
-        user.setEmail(faker.internet().emailAddress());
+        user.setEmail((firstName + "." + lastName + faker.random().hashCode() + "@apitest.com").toLowerCase());
 
         FileUtil.writeUserTOFile(user);
 
