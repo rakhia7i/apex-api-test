@@ -1,5 +1,8 @@
 package com.apex.api.test.core;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
     private String id;
     private String name;

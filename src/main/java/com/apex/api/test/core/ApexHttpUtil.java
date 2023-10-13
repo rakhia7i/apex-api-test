@@ -6,6 +6,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -27,7 +28,7 @@ public class ApexHttpUtil {
         addHeaders(postRequest);
 
         HttpClient client = HttpClientBuilder.create().build();
-        StringEntity entity = new StringEntity(message);
+        StringEntity entity = new StringEntity(message, ContentType.APPLICATION_JSON);
         postRequest.setEntity(entity);
 
         HttpResponse response = client.execute(postRequest);
@@ -39,7 +40,7 @@ public class ApexHttpUtil {
         addHeaders(putRequest);
 
         HttpClient client = HttpClientBuilder.create().build();
-        StringEntity entity = new StringEntity(message);
+        StringEntity entity = new StringEntity(message, ContentType.APPLICATION_JSON);
         putRequest.setEntity(entity);
 
         HttpResponse response = client.execute(putRequest);
