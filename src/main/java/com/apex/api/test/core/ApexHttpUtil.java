@@ -40,7 +40,7 @@ public class ApexHttpUtil {
         addHeaders(putRequest);
 
         HttpClient client = HttpClientBuilder.create().build();
-        StringEntity entity = new StringEntity(message);
+        StringEntity entity = new StringEntity(message, ContentType.APPLICATION_JSON);
         putRequest.setEntity(entity);
 
         HttpResponse response = client.execute(putRequest);

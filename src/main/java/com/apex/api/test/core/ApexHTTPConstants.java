@@ -18,13 +18,13 @@ public interface ApexHTTPConstants {
 
 
     //status messages
-    public static final String HTTP_STATUS_OK200_MSG= "Everything worked as expected.";
+    public static final String HTTP_STATUS_OK200_MSG= "OK";
     public static final String HTTP_STATUS_CREATED201_MSG= "A resource was successfully created in response to a POST request. The Location header contains the URL pointing to the newly created resource.";
     public static final String HTTP_STATUS_DELETED204_MSG = "The request was handled successfully and the response contains no body content (like a DELETE request).";
     public static final String HTTP_STATUS_BADREQUEST400_MSG ="Bad request. This could be caused by various actions by the user, such as providing invalid JSON data in the request body etc.";
     public static final String HTTP_STATUS_AUTHENTICATION_FAILED401_MSG="Authentication failed.";
     public static final String HTTP_STATUS_USER_NOTALLOWED403_MSG="The authenticated user is not allowed to access the specified API endpoint.";
-    public static final String HTTP_STATUS_NOT_FOUND_404_MSG ="The requested resource does not exist.";
+    public static final String HTTP_STATUS_NOT_FOUND_404_MSG ="Not Found";
     public static final String HTTP_STATUS_METHODNOTALLOWED405_MSG ="Method not allowed. Please check the Allow header for the allowed HTTP methods.";
 
     public static final String HTTP_STATUS_UNSUPPORTEDMEDIATYPE415_MSG ="Unsupported media type. The requested content type or version number is invalid.";

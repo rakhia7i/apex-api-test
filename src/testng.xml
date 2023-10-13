@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Default Suite">
+    <test thread-count="5" name="apex-api-test">
+        <classes>
+            <class name="com.apexAssignments.test.UserApiPostTest"/>
+            <class name="com.apexAssignments.test.UserApiGetTest"/>
+            <class name="com.apexAssignments.test.UserApiPutTest"/>
+            <class name="com.apexAssignments.test.UserApiDeleteTest"/>
+        </classes>
+    </test> <!-- apex-api-test -->
+</suite> <!-- Default Suite -->
