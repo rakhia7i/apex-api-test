@@ -3,20 +3,29 @@ package com.apexAssignments.test;
 import com.apex.api.test.core.ApexHTTPConstants;
 import com.apex.api.test.core.ApexHttpUtil;
 import com.apex.api.test.core.User;
+import com.apex.api.test.util.POIExcelUtil;
 import com.apex.api.test.util.UserUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 
 public class UserApiPutTest {
     ObjectMapper mapper = new ObjectMapper();
 
-    @Test(priority = 1)
-    public void whenUpdateName_ThenStatus200() throws Exception {
-        User user = UserUtil.getUserFromFile(); // Getting the user from file
-
-        System.out.println("Current name is " + user.getName());
+    @DataProvider(name = "dp_putValidIds")
+    public Object[][] postValidUsersUsingPOI() throws IOException {
+        String[][] users = POIExcelUtil.getUsersForPutFromExcel("ApexTestData.xlsx", "UsersForPut");
+        return users;
+    }
+    @Test(priority = 1, dataProvider ="dp_putValidIds" )
+    public void whenUpdateName_ThenStatus200(String id,String name, String email, String gender, String status) throws Exception {
+        //User user = UserUtil.getUserFromFile(); // Getting the user from file
+        User user = new User(id,name,email,gender, status);
+        //System.out.println("Current name is " + user.getName());
 
         // Get a new name to set
         String newName = UserUtil.generateNewName();

@@ -12,7 +12,6 @@ import static com.apex.api.test.core.ApexHttpUtil.createRequestUrl;
 
 public class DoDeleteApi {
 
-
     public static void main(String[] args) throws IOException, ClientProtocolException {
 
         String url = createRequestUrl("5227865");
@@ -21,7 +20,6 @@ public class DoDeleteApi {
         httpDelete.addHeader("content-type", "application/json");
 
         try {
-
             HttpClient client = HttpClientBuilder.create().build();
             HttpResponse response = client.execute(httpDelete);
             int statusCode = response.getStatusLine().getStatusCode();

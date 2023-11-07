@@ -1,5 +1,6 @@
 package com.apex.api.test.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -76,5 +77,9 @@ public class User {
                 ", gender='" + gender + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+    @JsonIgnore
+    public String[] getFieldsAsArray(){
+        return new String[]{id,name,email,gender,status};
     }
 }

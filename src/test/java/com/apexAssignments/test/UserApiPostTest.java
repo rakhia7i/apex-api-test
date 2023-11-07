@@ -1,14 +1,19 @@
 package com.apexAssignments.test;
 
+import com.apex.api.test.util.JXLExcelUtil;
+import com.apex.api.test.util.POIExcelUtil;
 import com.apex.api.test.util.UserUtil;
 import org.apache.http.HttpResponse;
 import com.apex.api.test.core.User;
 import com.apex.api.test.core.ApexHttpUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 
 public class UserApiPostTest {
@@ -22,12 +27,19 @@ public class UserApiPostTest {
         UserUtil.createRandomUser();
     }
 
-    @Test(priority = 1)
-    public void whenPostWithValidUserFields_ThenStatus201() throws Exception {
-        User user = UserUtil.getUserFromFile(); // Getting the user from file
+    @DataProvider(name = "dp_postValidIds")
+    public Object[][] postValidUsersUsingPOI() throws IOException {
+        String[][] users = POIExcelUtil.getUsersForPostFromExcel("ApexTestData.xlsx", "UsersForPost");
+        return users;
+    }
+
+    @Test(dataProvider = "dp_postValidIds", priority = 1)
+    public void whenPostWithValidUserFields_ThenStatus201(String id,String name, String email, String gender, String status) throws Exception {
+        //User user = UserUtil.getUserFromFile(); // Getting the user from file
 
         // NOTE: First time this is run, the user will not have an id.
         // The id will be set after the user is created (after POST call)
+        User user = new User(name,email,gender,status);
         String newUserString = mapper.writeValueAsString(user);
 
         HttpResponse response = ApexHttpUtil.sendAndReceivePostMessages(newUserString);
@@ -43,20 +55,31 @@ public class UserApiPostTest {
             User newUser = mapper.readValue(result, User.class);
             newUserId = newUser.getId();
 
-            System.out.println("New User created with id " + newUserId);
+            System.out.println("New User created with id: " + newUserId);
             user.setId(newUserId);
 
             // Updating the user with the new id and saving it to the user.json file
-            UserUtil.writeUserToFile(user);
+          // POIExcelUtil.updateUserIdInXLFile(user);
 
             System.out.println(newUser);
+
         }
     }
 
-    @Test(priority = 2)
-    public void whenPostWithExistingUserEmail_ThenStatus422() throws Exception {
+
+    //-------
+    @DataProvider(name = "dp_postInvalidIds")
+    public Object[][] postInvalidUsersUsingPOI() throws IOException {
+        String[][] users = POIExcelUtil.getUsersForPostFromExcel("ApexTestData.xlsx", "UsersForPost");
+        return users;
+    }
+    @Test(priority = 2, dataProvider = "dp_postInvalidIds")
+    public void whenPostWithExistingUserEmail_ThenStatus422(String id,String name, String email, String gender, String status) throws Exception {
         // Getting the user from file
-        User user = UserUtil.getUserFromFile();
+       // User user = UserUtil.getUserFromFile();
+       // String newUserString = mapper.writeValueAsString(user);
+
+        User user = new User(name,email,gender,status);
         String newUserString = mapper.writeValueAsString(user);
 
         HttpResponse response = ApexHttpUtil.sendAndReceivePostMessages(newUserString);
@@ -71,11 +94,21 @@ public class UserApiPostTest {
         }
     }
 
-    @Test(priority = 3)
-    public void whenPostWithNoEmail_ThenStatus422() throws Exception {
-        User user = UserUtil.getUserFromFile();
+    //--------
+    @DataProvider(name = "dp_postNoEmailIds")
+    public Object[][] postNoEmailUsersUsingPOI() throws IOException {
+        String[][] users = POIExcelUtil.getUsersForPostFromExcel("ApexTestData.xlsx", "NoEmailUsersForPost");
+        return users;
+    }
 
-        user.setEmail(null); // Manually removing the email from the user
+    @Test(priority = 3, dataProvider = "dp_postNoEmailIds")
+    public void whenPostWithNoEmail_ThenStatus422(String id,String name, String email, String gender, String status) throws Exception {
+       // User user = UserUtil.getUserFromFile();
+
+       // user.setEmail(null); // Manually removing the email from the user
+        //String newUserString = mapper.writeValueAsString(user);
+
+        User user = new User(name,email,gender,status);
         String newUserString = mapper.writeValueAsString(user);
 
         HttpResponse response = ApexHttpUtil.sendAndReceivePostMessages(newUserString);

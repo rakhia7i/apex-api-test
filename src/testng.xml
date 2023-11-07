@@ -8,4 +8,10 @@
             <class name="com.apexAssignments.test.UserApiDeleteTest"/>
         </classes>
     </test> <!-- apex-api-test -->
+    <test name = "Parallel Tests" parallel = "methods">
+            <classes>
+                <class name="com.apexAssignments.test.ParallelTest"/>
+            </classes>
+        </test>
+
 </suite> <!-- Default Suite -->

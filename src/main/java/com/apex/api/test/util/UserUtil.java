@@ -3,7 +3,13 @@ package com.apex.api.test.util;
 import com.apex.api.test.core.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,7 +66,7 @@ public class UserUtil {
         byte[] strToBytes = mapper.writeValueAsString(user).getBytes();
 
         Files.write(path, strToBytes);
-        System.out.println("User written to file" + FILE_PATH_USER_DOT_JSON + " successfully");
+        System.out.println("User written to file: " + FILE_PATH_USER_DOT_JSON + " successfully");
     }
 
     /**
@@ -69,7 +75,7 @@ public class UserUtil {
      * @throws Exception
      */
     private static User readUserFromFile() throws Exception {
-        System.out.println("Reading user from file" + FILE_PATH_USER_DOT_JSON);
+        System.out.println("Reading user from file: " + FILE_PATH_USER_DOT_JSON);
         if(!Files.exists(Paths.get(FILE_PATH_USER_DOT_JSON))){
             new RuntimeException("File does not exist. Please ensure that you have created a user first");
         }
@@ -100,6 +106,19 @@ public class UserUtil {
      * @return
      */
     public static String generateNewName() {
+
         return faker.name().fullName();
     }
+
+    public static String[][] postUsersIntoExcel(String s, String sheet1, String postValidIds) {
+        String[][] ids = POIExcelUtil.getUsersFromExcel("ApexTestData.xlsx", "Sheet2", "postValidIds");
+
+
+        return ids;
+
+
+    }
+
+
 }
+
