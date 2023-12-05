@@ -45,8 +45,7 @@ public class UserApiPostTest {
         HttpResponse response = ApexHttpUtil.sendAndReceivePostMessages(newUserString);
 
         // Check if create operation is successful
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
-        Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
+        ApexApiValidator.performBasicAssertValidations(response, "CREATED");
 
         String newUserId = null;
         if (response.getStatusLine().getStatusCode() == 201) {
@@ -85,14 +84,9 @@ public class UserApiPostTest {
         HttpResponse response = ApexHttpUtil.sendAndReceivePostMessages(newUserString);
         String result = ApexHttpUtil.getResponseString(response);
 
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 422);
-        Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Unprocessable Entity");
-
-        if (response.getStatusLine().getStatusCode() == 422) { // Unprocessable entity returned from server
-            System.out.println("User could not be created!");
-            System.err.println(result);
+        ApexApiValidator.performBasicAssertValidations(response, "UNPROCESSABLE");
         }
-    }
+
 
     //--------
     @DataProvider(name = "dp_postNoEmailIds")
@@ -114,8 +108,7 @@ public class UserApiPostTest {
         HttpResponse response = ApexHttpUtil.sendAndReceivePostMessages(newUserString);
         String result = ApexHttpUtil.getResponseString(response);
 
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 422);
-        Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Unprocessable Entity");
+        ApexApiValidator.performBasicAssertValidations(response, "UNPROCESSABLE");
 
         if (response.getStatusLine().getStatusCode() == 422) { // Unprocessable entity returned from server
             System.out.println("User could not be created!");

@@ -53,9 +53,9 @@ public class UserApiGetTest extends ApexApiBaseTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode resUser = mapper.readTree(responseString);
 
+        //perform basic validtions
+        ApexApiValidator.performBasicAssertValidations(res, "OK");
 
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_OK);
-        Assert.assertEquals(res.getStatusLine().getReasonPhrase(), ApexHTTPConstants.HTTP_STATUS_OK200_MSG);
 
         // match responseString id to the id from excel file
         Assert.assertEquals(resUser.get("id").asText(), id);
@@ -79,8 +79,11 @@ public class UserApiGetTest extends ApexApiBaseTest {
         User user = new User(id, name, email, gender, status);
 
         HttpResponse res = ApexHttpUtil.sendAndReceiveGetMessages(user.getId());
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND);
-        Assert.assertEquals(res.getStatusLine().getReasonPhrase(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND_404_MSG);
+        //perform basic validtions
+        ApexApiValidator.performBasicAssertValidations(res, "NOT_FOUND");
+
+//        Assert.assertEquals(res.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND);
+//        Assert.assertEquals(res.getStatusLine().getReasonPhrase(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND_404_MSG);
     }
 
     //--------------//
@@ -93,23 +96,20 @@ public class UserApiGetTest extends ApexApiBaseTest {
     @Test(priority = 3)
     public void whenGetWithNonIntegerUserId_thenStatus404() throws Exception {
         HttpResponse res = ApexHttpUtil.sendAndReceiveGetMessages("abcd");
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND);
-        Assert.assertEquals(res.getStatusLine().getReasonPhrase(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND_404_MSG);
+        ApexApiValidator.performBasicAssertValidations(res, "NOT_FOUND");
     }
 
     @Test(priority = 4)
     public void whenGetWithBlankUserID_thenStatus200_AllRecords() throws Exception {
         // This should return a list of users (all users) and status OK
         HttpResponse res = ApexHttpUtil.sendAndReceiveGetMessages("");
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_OK);
-        Assert.assertEquals(res.getStatusLine().getReasonPhrase(), ApexHTTPConstants.HTTP_STATUS_OK200_MSG);
+        ApexApiValidator.performBasicAssertValidations(res, "OK");
     }
 
     @Test(priority = 5)
     public void whenGetWithSpecialCharacters_thenStatus404() throws Exception {
         HttpResponse res = ApexHttpUtil.sendAndReceiveGetMessages("$$$");
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND);
-        Assert.assertEquals(res.getStatusLine().getReasonPhrase(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND_404_MSG);
+        ApexApiValidator.performBasicAssertValidations(res, "NOT_FOUND");
     }
 
 }

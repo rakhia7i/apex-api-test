@@ -32,8 +32,8 @@ public class UserApiDeleteTest {
         HttpResponse response = ApexHttpUtil.sendAndReceiveGetMessages(userId);
 
         // Expected result is 404 NOT FOUND as the user is already deleted
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND);
-        Assert.assertEquals(response.getStatusLine().getReasonPhrase(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND_404_MSG);
+        //perform basic validtions
+        ApexApiValidator.performBasicAssertValidations(response, "NOT_FOUND");
 
     }
 
@@ -44,8 +44,8 @@ public class UserApiDeleteTest {
         HttpResponse response = ApexHttpUtil.sendAndReceiveGetMessages("-1099");
 
         // Expected result is 404 NOT FOUND as the user does not exist
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND);
-        Assert.assertEquals(response.getStatusLine().getReasonPhrase(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND_404_MSG);
+        //perform basic validtions
+        ApexApiValidator.performBasicAssertValidations(response, "NOT_FOUND");
 
     }
 }

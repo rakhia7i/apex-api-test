@@ -36,8 +36,8 @@ public class UserApiPutTest {
         HttpResponse response = ApexHttpUtil.sendAndReceivePutMessages(user.getId(), mapper.writeValueAsString(user));
         String responseString = ApexHttpUtil.getResponseString(response);
 
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_OK );
-        Assert.assertEquals(response.getStatusLine().getReasonPhrase(),  ApexHTTPConstants.HTTP_STATUS_OK200_MSG);
+        //perform basic validtions
+        ApexApiValidator.performBasicAssertValidations(response, "OK");
 
         // Check if the user name has been updated by making a GET request and checking the name
         HttpResponse getResponse = ApexHttpUtil.sendAndReceiveGetMessages(user.getId());
@@ -64,12 +64,11 @@ public class UserApiPutTest {
         user.setName(newName);
 
         System.out.println("New name is " + user.getName());
-
         HttpResponse response = ApexHttpUtil.sendAndReceivePutMessages("-123456789", mapper.writeValueAsString(user));
         String responseString = ApexHttpUtil.getResponseString(response);
 
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), ApexHTTPConstants.HTTP_STATUS_NOT_FOUND );
-        Assert.assertEquals(response.getStatusLine().getReasonPhrase(),  ApexHTTPConstants.HTTP_STATUS_NOT_FOUND_404_MSG);
+        //perform basic validtions
+        ApexApiValidator.performBasicAssertValidations(response, "NOT_FOUND");
 
     }
 }
