@@ -1,5 +1,48 @@
-== Apex APi Test Project
+= Welcome to AsciiDoc Alive
+:toc: auto
+:icons: font
 
-This is *test*
+== Introduction
+This is a *live* AsciiDoc editor. Start typing in the left panel to see the rendered output on the right.
 
-include::intro.adoc[]
+== Features
+* Real-time preview
+* Syntax highlighting with CodeMirror
+* Line numbers
+* Dark theme
+* Export functionality
+* Clean interface
+
+[source,javascript]
+----
+console.log('Hello, AsciiDoc!');
+----
+
+== Formatting Examples
+This text is *bold*, this is _italic_, and this is `monospace`.
+
+=== Lists
+. First item
+. Second item
+.. Nested item
+. Third item
+
+[TIP]
+====
+This is a sample tip block.
+====
+
+[NOTE]
+====
+This is a sample note block.
+====
+
+[WARNING]
+====
+This is a sample warning block.
+====
+
+[IMPORTANT]
+====
+This is a sample important block.
+====
